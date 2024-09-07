@@ -2,13 +2,11 @@ pipeline {
   agent any
   stages {
      stage('Build') {
-    publishOverSSH(
-    configName: webserver
-    transfers: [
-        [sourceFiles: '*.php',remoteDirectory: '/var/www/html']
-    ],
-    execCommand: "ls -lrt && echo 'Hello from remote!'"
-           )
+    publishOverSsh(
+    remote: webserver,
+    from: '*.php',
+    into: '//var//www//html'
+        )
      }
     stage('verify installations') {
       steps {
