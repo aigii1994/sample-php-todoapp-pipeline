@@ -19,18 +19,23 @@ stages {
       }
     }
     stage('run tests') {
-      steps {
+      steps { 
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         sh 'phpunit --bootstrap src/autoload.php tests'
-      }
+      } }
     }
     stage ('run tests with TestDox') {
       steps {
-        sh 'phpunit --bootstrap src/autoload.php --testdox tests'
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+        sh 'phpunit --bootstrap src/autoload.php --testdox tests' 
+        }
       }
     }
     stage ('run tests with JUnit results') {
       steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         sh 'phpunit --bootstrap src/autoload.php --log-junit target/junit-results.xml tests'
+      } 
       }
       post {
         always {
