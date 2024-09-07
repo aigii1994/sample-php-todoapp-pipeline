@@ -10,6 +10,7 @@ stages {
      '''
        }
      }
+  // Check php & phpunit
     stage('verify installations') {
       steps {
         sh '''
@@ -18,12 +19,14 @@ stages {
         '''
       }
     }
+  // Run Tests
     stage('run tests') {
       steps { 
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
         sh 'phpunit --bootstrap src/autoload.php tests'
       } }
     }
+  // Run Tests in test box
     stage ('run tests with TestDox') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -31,6 +34,7 @@ stages {
         }
       }
     }
+  // VAlidate against JUnit results 
     stage ('run tests with JUnit results') {
       steps {
         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
@@ -39,6 +43,7 @@ stages {
       }
       post {
         always {
+          //push it to remote repo if exist
           junit testResults: 'target/*.xml'
         }
       }
