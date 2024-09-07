@@ -6,7 +6,7 @@ pipeline {
      sh ''' 
       echo ${WORKSPACE}
       ls -ltrh
-      scp ${WORKSPACE}/*.php root@webserver:\var\www\html
+      scp ${WORKSPACE}/*.php root@webserver:/var/www/html
      '''
      }
 }}}
