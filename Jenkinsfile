@@ -4,7 +4,9 @@ pipeline {
     stage('Build') {
      steps { 
      sh ''' 
-      pwd 
+      echo ${WORKSPACE}
+      ls -ltrh
+      scp ${WORKSPACE}/*.php root@webserver:\var\www\html
      '''
      }
 }}}
