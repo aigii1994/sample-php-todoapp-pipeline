@@ -1,15 +1,21 @@
 <?php declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 
-final class UnitTest extends TestCase
+final class EmailTest extends TestCase
 {
-    public function test1(): void
+    public function testCanBeCreatedFromValidEmail(): void
     {
-      printf("TEST 1");
+        $string = 'user@example.com';
+
+        $email = Email::fromString($string);
+
+        $this->assertSame($string, $email->asString());
     }
 
-    public function test2(): void
+    public function testCannotBeCreatedFromInvalidEmail(): void
     {
-      printf("TEST 2");
+        $this->expectException(InvalidArgumentException::class);
+
+        Email::fromString('invalid');
     }
 }
