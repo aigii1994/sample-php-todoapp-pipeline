@@ -1,7 +1,7 @@
 <?php
-$servername = "localhost";
-$username = "root"; // default username for MySQL
-$password = ""; // default password for MySQL
+$servername = getenv('DB_HOST');
+$username = getenv('DB_USER'); // default username for MySQL
+$password = getenv('DB_PASSWORD');; // default password for MySQL
 $dbname = "todo_app";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
