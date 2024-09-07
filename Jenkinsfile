@@ -1,12 +1,13 @@
 pipeline {
   agent any
   stages {
-     stage('Build') {
-    publishOverSsh(
-    remote: webserver,
-    from: '*.php',
-    into: '//var//www//html'
-        )
+    stage('Build') {
+     steps { 
+     sh ''' 
+      pwd 
+     '''
+     }
+}
      }
     stage('verify installations') {
       steps {
