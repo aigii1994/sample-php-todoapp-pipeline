@@ -41,6 +41,29 @@ stages {
         sh 'phpunit --bootstrap src/autoload.php --log-junit target/junit-results.xml tests'
       } 
       }
+
+     stage('Run PHP Linter') {
+            steps {
+                // Run PHP's built-in linter on all .php files
+                script {
+                    def phpFiles = sh(script: 'find . -name "*.php"', returnStdout: true).trim()
+                    if (phpFiles) {
+                        sh "echo ${phpFiles} | xargs php -l"
+                    } else {
+                        echo 'No PHP files found for linting'
+                    }
+                }
+            }
+        }
+      
+        stage('Run PHP_CodeSniffer') {
+            steps {
+                // Run PHP_CodeSniffer to check coding standards
+                sh 'vendor/bin/phpcs --standard=PSR12 src/'
+            }
+        }
+    }
+
       post {
         always {
           //push it to remote repo if exist
