@@ -1,15 +1,6 @@
 pipeline {
   agent any
 stages {
-    stage('Build') {
-     steps { 
-     sh ''' 
-      echo ${WORKSPACE}
-      ls -ltrh
-      scp ${WORKSPACE}/*.php root@webserver:/var/www/html
-     '''
-       }
-     }
   // Check php & phpunit
     stage('verify installations') {
       steps {
@@ -62,6 +53,16 @@ stages {
                 sh 'vendor/bin/phpcs --standard=PSR12 src/'
             }
         }
+
+    stage('Deploy') {
+     steps { 
+     sh ''' 
+      echo ${WORKSPACE}
+      ls -ltrh
+      scp ${WORKSPACE}/*.php root@webserver:/var/www/html
+     '''
+       }
+     }
     }
 
       post {
